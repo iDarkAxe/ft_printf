@@ -6,37 +6,12 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:31:04 by ppontet           #+#    #+#             */
-/*   Updated: 2024/11/24 16:43:04 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2024/11/24 16:51:02 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <unistd.h>
-
-ssize_t	ft_putnbr_hex_start(long long nbr, char *base)
-{
-	ssize_t temp = 0;
-	unsigned long long nb;
-
-	// Si le nombre est négatif, on le rend positif
-	if (nbr < 0)
-		nb = -nbr;  // Prendre la valeur absolue du nombre
-	else
-		nb = nbr;  // Si positif, utiliser le nombre tel quel
-
-	// Cas de récursion
-	if (nb >= 16)
-	{
-		temp += ft_putnbr_hex_start(nb / 16, base);  // Appel récursif pour le quotient
-	}
-
-	// Affiche le dernier chiffre une fois qu'on atteint les unités
-	temp += write(1, &base[nb % 16], 1);
-
-	return temp;
-}
-
-
 
 /**
  * @brief Putnbr with a particular base
@@ -45,25 +20,25 @@ ssize_t	ft_putnbr_hex_start(long long nbr, char *base)
  * @param base
  * @return ssize_t number of char printed
  */
-// ssize_t	ft_putnbr_hex_start(long nbr, char *base)
-// {
-// 	ssize_t				temp;
-// 	long long nb;
+ssize_t	ft_putnbr_hex_start(long nbr, char *base)
+{
+	ssize_t				temp;
+	long long nb;
 
-// 	temp = 0;
-// 	if (nbr < 0)
-// 		nb = -nbr;
-// 	else
-// 		nb = nbr;
-// 	if (nb >= 16)
-// 	{
-// 		temp += ft_putnbr_hex_start(nb / 16, base);
-// 		temp += ft_putnbr_hex_start(nb % 16, base);
-// 	}
-// 	else if (nb >= 0)
-// 		temp += write(1, &base[nb], 1);
-// 	return (temp);
-// }
+	temp = 0;
+	if (nbr < 0)
+		nb = -nbr;
+	else
+		nb = nbr;
+	if (nb >= 16)
+	{
+		temp += ft_putnbr_hex_start(nb / 16, base);
+		temp += ft_putnbr_hex_start(nb % 16, base);
+	}
+	else if (nb >= 0)
+		temp += write(1, &base[nb], 1);
+	return (temp);
+}
 
 /**
  * @brief Putnbr for hex or HEX

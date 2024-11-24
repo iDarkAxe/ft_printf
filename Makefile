@@ -4,14 +4,14 @@ CFLAGS = -Wall -Wextra -Werror
 LIBFT = libft.a
 NAME = libftprintf.a
 
-# DOSSIERS
+# DIRECTORIES
 P_INC = ./
 P_SRC = ./
 P_OBJ = .obj/
 P_LIBFT = libft/
 P_TEMP = temp/
 
-# FICHIERS
+# FILES
 INC = header.h
 SRC =  ft_printf.c 
 SRC_LIB = ft_putnbr_base.c ft_putstr_fd.c ft_strchr.c ft_strlen.c ft_convert_base.c
@@ -23,10 +23,10 @@ OBJS = $(subst $(P_SRC), $(P_OBJ), $(SRCS:.c=.o))
 
 P_OBJS = $(subst $(P_SRC), $(P_OBJ), $(P_SRC)) 
 
-# REGLES
+# RULES
 all :$(NAME)
 
-# Créer la bibliothèque avec les objets
+# Create the library with libft
 # $(NAME): $(P_OBJ)$(OBJS) $(P_LIBFT)$(LIBFT)
 # 	cp $(P_LIBFT)$(LIBFT) .
 # 	ar -x libft.a
@@ -50,7 +50,7 @@ debug : *.c | $(P_OBJS)
 # $(LIBFT) : 
 # 	@$(MAKE) --no-print-directory -C libft all
 
-# NETTOYAGE
+# CLEAN SECTION
 clean :
 	rm -rfd $(P_OBJ)
 
@@ -59,9 +59,6 @@ fclean : clean
 	
 # @$(MAKE) clean --no-print-directory
 # @$(MAKE) -C $(P_LIBFT) fclean --no-print-directory
-	
-
-
 
 re : 
 	@$(MAKE) --no-print-directory fclean
