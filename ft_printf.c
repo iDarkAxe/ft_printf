@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 11:58:55 by ppontet           #+#    #+#             */
-/*   Updated: 2024/11/24 15:59:54 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2024/11/24 16:43:40 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static ssize_t	ft_print_search(char param, va_list va)
 	if (param == 'u')
 		return (ft_putnbr_fd(va_arg(va, unsigned int), 1));
 	if (param == 'x' || param == 'X')
-		return (ft_putnbr_hex(va_arg(va, long), param));
+		return (ft_putnbr_hex(va_arg(va, int), param));
 	return (0);
 }
 
