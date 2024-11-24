@@ -6,11 +6,11 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 11:58:55 by ppontet           #+#    #+#             */
-/*   Updated: 2024/11/22 17:26:36 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2024/11/24 15:59:54 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -81,41 +81,9 @@ static ssize_t	ft_print_search(char param, va_list va)
 	if (param == 'd' || param == 'i')
 		return (ft_putnbr_fd(va_arg(va, int), 1));
 	if (param == 'u')
-		return (ft_putnbr_fd((int)va_arg(va, unsigned int), 1));
+		return (ft_putnbr_fd(va_arg(va, unsigned int), 1));
 	if (param == 'x' || param == 'X')
-		return (ft_putnbr_hex(va_arg(va, int), param));
+		return (ft_putnbr_hex(va_arg(va, long), param));
 	return (0);
 }
 
-// /**
-//  * @brief Print the given str until a separator is found
-//  *
-//  * @param str
-//  * @param separator
-//  */
-// static ssize_t	ft_print_until(char *str, char separator)
-// {
-// 	char	*separator_found;
-
-// 	separator_found = ft_strchr(str, separator);
-// 	if (separator_found != NULL)
-// 		return (write(1, str, ft_strchr_len(str, '%')));
-// 	return (write(1, str, ft_strlen(str)));
-// }
-
-// /**
-//  * @brief Same functionnality as strchrm but return a len
-//  *
-//  * @param string
-//  * @param searched_char
-//  * @return size_t
-//  */
-// static size_t	ft_strchr_len(const char *string, int searched_char)
-// {
-// 	size_t	count;
-
-// 	count = 0;
-// 	while (string && string[count] != '\0' && string[count] != searched_char)
-// 		count++;
-// 	return (count);
-// }

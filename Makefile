@@ -13,10 +13,11 @@ P_TEMP = temp/
 
 # FICHIERS
 INC = header.h
-SRC =  ft_printf.c ft_putchar_fd.c ft_putnbr_fd.c ft_putnbr_base.c ft_putpointer_fd.c ft_putstr_fd.c ft_strchr.c ft_strlen.c ft_convert_base.c ft_strlcpy.c
+SRC =  ft_printf.c 
+SRC_LIB = ft_putnbr_base.c ft_putstr_fd.c ft_strchr.c ft_strlen.c ft_convert_base.c
 
 # MANIPULATION
-SRCS =	$(addprefix $(P_SRC), $(SRC))
+SRCS =	$(addprefix $(P_SRC), $(SRC) $(SRC_LIB))
 
 OBJS = $(subst $(P_SRC), $(P_OBJ), $(SRCS:.c=.o))
 
@@ -36,7 +37,7 @@ $(NAME): $(P_OBJ)$(OBJS)
 	ar -rcs $(NAME) $(P_OBJ)*.o
 
 $(P_OBJ)%.o : %.c | $(P_OBJS)
-	$(CC) $(CFLAGS) -c $< -I $(P_LIBFT) -I $(P_INC) -o $@
+	$(CC) $(CFLAGS) -c $< -I $(P_INC) -o $@
 
 $(P_OBJS) : 
 	mkdir -p $(P_OBJS)
