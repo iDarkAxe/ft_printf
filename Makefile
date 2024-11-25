@@ -14,7 +14,7 @@ P_TEMP = temp/
 # FILES
 INC = header.h
 SRC =  ft_printf.c 
-SRC_LIB = ft_putnbr_base.c ft_putstr_fd.c ft_strchr.c ft_strlen.c ft_convert_base.c
+SRC_LIB = ft_putnbr_base.c ft_putstr_fd.c ft_strlen.c
 
 # MANIPULATION
 SRCS =	$(addprefix $(P_SRC), $(SRC) $(SRC_LIB))
@@ -26,15 +26,8 @@ P_OBJS = $(subst $(P_SRC), $(P_OBJ), $(P_SRC))
 # RULES
 all :$(NAME)
 
-# Create the library with libft
-# $(NAME): $(P_OBJ)$(OBJS) $(P_LIBFT)$(LIBFT)
-# 	cp $(P_LIBFT)$(LIBFT) .
-# 	ar -x libft.a
-# 	mv *.o libft.a $(P_OBJ)
-# 	ar -rcs $(NAME) $(P_OBJ)*.o
-
 $(NAME): $(P_OBJ)$(OBJS)
-	ar -rcs $(NAME) $(P_OBJ)*.o
+	ar -rcs $(NAME) $(OBJS)
 
 $(P_OBJ)%.o : %.c | $(P_OBJS)
 	$(CC) $(CFLAGS) -c $< -I $(P_INC) -o $@
@@ -42,23 +35,12 @@ $(P_OBJ)%.o : %.c | $(P_OBJS)
 $(P_OBJS) : 
 	mkdir -p $(P_OBJS)
 
-debug : *.c | $(P_OBJS)
-	$(CC) $(CFLAGS) -g -c $< -I $(P_LIBFT) -I $(P_INC) -o $@
-	ar -rcs $(NAME) $(OBJS) $(P_LIBFT)$(LIBFT)
-
-# LIBFT
-# $(LIBFT) : 
-# 	@$(MAKE) --no-print-directory -C libft all
-
 # CLEAN SECTION
 clean :
 	rm -rfd $(P_OBJ)
 
 fclean : clean
 	rm -rf $(NAME)
-	
-# @$(MAKE) clean --no-print-directory
-# @$(MAKE) -C $(P_LIBFT) fclean --no-print-directory
 
 re : 
 	@$(MAKE) --no-print-directory fclean

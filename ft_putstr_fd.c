@@ -6,12 +6,12 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:12:07 by ppontet           #+#    #+#             */
-/*   Updated: 2024/11/24 16:53:13 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2024/11/25 14:53:11 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "ft_printf.h"
+#include <unistd.h>
 
 /**
  * @brief Write the string 's' on the given file descriptor
@@ -48,12 +48,13 @@ ssize_t	ft_putchar_fd(char c, int fd)
  */
 ssize_t	ft_putnbr_fd(long long n, int fd)
 {
-	ssize_t count_printed = 0;
-	char temp;
+	ssize_t	count_printed;
+	char	temp;
 
+	count_printed = 0;
 	if (n < 0)
 	{
-		if (n == -2147483648)  
+		if (n == -2147483648)
 			return (write(fd, "-2147483648", 11));
 		else
 		{
@@ -65,6 +66,5 @@ ssize_t	ft_putnbr_fd(long long n, int fd)
 		count_printed += ft_putnbr_fd(n / 10, fd);
 	temp = n % 10 + '0';
 	count_printed += write(fd, &temp, 1);
-
 	return (count_printed);
 }

@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:31:04 by ppontet           #+#    #+#             */
-/*   Updated: 2024/11/24 16:51:02 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2024/11/25 16:10:50 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,18 @@
  * @param base
  * @return ssize_t number of char printed
  */
-ssize_t	ft_putnbr_hex_start(long nbr, char *base)
+static ssize_t	ft_putnbr_hex_start(unsigned int nbr, char *base)
 {
-	ssize_t				temp;
-	long long nb;
+	ssize_t			temp;
 
 	temp = 0;
-	if (nbr < 0)
-		nb = -nbr;
-	else
-		nb = nbr;
-	if (nb >= 16)
+	if (nbr >= 16)
 	{
-		temp += ft_putnbr_hex_start(nb / 16, base);
-		temp += ft_putnbr_hex_start(nb % 16, base);
+		temp += ft_putnbr_hex_start(nbr / 16, base);
+		temp += ft_putnbr_hex_start(nbr % 16, base);
 	}
-	else if (nb >= 0)
-		temp += write(1, &base[nb], 1);
+	else if (nbr >= 0)
+		temp += write(1, &base[nbr], 1);
 	return (temp);
 }
 
@@ -46,7 +41,7 @@ ssize_t	ft_putnbr_hex_start(long nbr, char *base)
  * @param nbr
  * @param height
  */
-ssize_t	ft_putnbr_hex(long long nbr, char height)
+ssize_t	ft_putnbr_hex(unsigned int nbr, char height)
 {
 	if (height == 1 || height == 'x')
 		return (ft_putnbr_hex_start(nbr, "0123456789abcdef"));
@@ -84,13 +79,13 @@ static ssize_t	ft_putnbr_hex_pointer(unsigned long nbr, char *base)
 /**
  * @brief Print pointer adress
  *
- * @param ptr
+ * @param nbr
  * @return ssize_t
  */
-ssize_t	ft_putpointer_fd(unsigned long ptr)
+ssize_t	ft_putpointer_fd(unsigned long nbr)
 {
-	if (!ptr)
+	if (!nbr)
 		return (write(1, "(nil)", 5));
-	return (write(1, "0x", 2) + ft_putnbr_hex_pointer(ptr,
+	return (write(1, "0x", 2) + ft_putnbr_hex_pointer(nbr,
 			"0123456789abcdef\0"));
 }

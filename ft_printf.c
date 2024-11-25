@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 11:58:55 by ppontet           #+#    #+#             */
-/*   Updated: 2024/11/24 16:43:40 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2024/11/25 16:17:27 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
-// static size_t	ft_strchr_len(const char *string, int searched_char);
 static ssize_t	ft_print_search(char param, va_list va);
 static char		ft_verify_param(char param, char format);
-// static ssize_t	ft_print_until(char *str, char separator);
 
 int	ft_printf(const char *str, ...)
 {
@@ -37,6 +35,11 @@ int	ft_printf(const char *str, ...)
 		{
 			count += ft_print_search(*(str + 1), arg_ptr);
 			str += 2;
+		}
+		if (*str == '%')
+		{
+			write(1, "%", 1);
+			str++;
 		}
 	}
 	va_end(arg_ptr);
@@ -83,7 +86,6 @@ static ssize_t	ft_print_search(char param, va_list va)
 	if (param == 'u')
 		return (ft_putnbr_fd(va_arg(va, unsigned int), 1));
 	if (param == 'x' || param == 'X')
-		return (ft_putnbr_hex(va_arg(va, int), param));
+		return (ft_putnbr_hex(va_arg(va, unsigned int), param));
 	return (0);
 }
-

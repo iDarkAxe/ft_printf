@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:33:31 by ppontet           #+#    #+#             */
-/*   Updated: 2024/11/24 16:43:47 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2024/11/25 15:04:54 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ size_t	ft_strlen(const char *the_string);
 // PRINT related functions
 ssize_t	ft_putchar_fd(char c, int fd);
 ssize_t	ft_putstr_fd(char *s, int fd);
-ssize_t ft_putnbr_fd(long long n, int fd);
+ssize_t	ft_putnbr_fd(long long n, int fd);
 ssize_t	ft_putunbr_fd(unsigned long long n, int fd);
-ssize_t	ft_putnbr_hex(long long nbr, char height);
+ssize_t	ft_putnbr_hex(unsigned int nbr, char height);
 ssize_t	ft_putnbr_base(unsigned long nbr, char *base);
 ssize_t	ft_putpointer_fd(unsigned long ptr);
 
