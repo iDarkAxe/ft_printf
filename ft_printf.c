@@ -6,18 +6,18 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 11:58:55 by ppontet           #+#    #+#             */
-/*   Updated: 2024/11/26 15:39:01 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2024/11/26 19:04:52 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdarg.h>
-#include <stdio.h>
 #include <unistd.h>
 
 static ssize_t	ft_print_search(char param, va_list va);
 static char		ft_verify_param(char param, char format);
 
+__attribute__((format(printf, 1, 2)))
 int	ft_printf(const char *str, ...)
 {
 	va_list	arg_ptr;
@@ -25,7 +25,7 @@ int	ft_printf(const char *str, ...)
 	size_t	count;
 
 	if (str == NULL)
-		return (0);
+		return (-1);
 	va_start(arg_ptr, str);
 	count = 0;
 	while (str != NULL && *str != '\0')

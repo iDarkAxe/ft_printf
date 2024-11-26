@@ -1,7 +1,6 @@
 .PHONY : all clean fclean re
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-LIBFT = libft.a
+CFLAGS = -Wall -Wextra -Werror -MMD -MP
 NAME = libftprintf.a
 
 # DIRECTORIES
@@ -9,11 +8,10 @@ P_INC = ./
 P_SRC = ./
 P_OBJ = .obj/
 P_LIBFT = libft/
-P_TEMP = temp/
 
 # FILES
-INC = header.h
-SRC =  ft_printf.c 
+INC = ft_printf.h
+SRC =  ft_printf.c
 SRC_LIB = ft_putnbr_base.c ft_putstr_fd.c ft_strlen.c
 
 # MANIPULATION
@@ -21,7 +19,8 @@ SRCS =	$(addprefix $(P_SRC), $(SRC) $(SRC_LIB))
 
 OBJS = $(subst $(P_SRC), $(P_OBJ), $(SRCS:.c=.o))
 
-P_OBJS = $(subst $(P_SRC), $(P_OBJ), $(P_SRC)) 
+P_OBJS = $(subst $(P_SRC), $(P_OBJ), $(P_SRC))
+DEPS = $(OBJS:%.o=%.d)
 
 # RULES
 all :$(NAME)
@@ -45,3 +44,5 @@ fclean : clean
 re : 
 	@$(MAKE) --no-print-directory fclean
 	@$(MAKE) --no-print-directory all
+
+-include $(DEPS)
