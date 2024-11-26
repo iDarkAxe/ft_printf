@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 11:58:55 by ppontet           #+#    #+#             */
-/*   Updated: 2024/11/25 16:17:27 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2024/11/26 15:39:01 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,27 @@ static char		ft_verify_param(char param, char format);
 int	ft_printf(const char *str, ...)
 {
 	va_list	arg_ptr;
+	ssize_t	write_count;
 	size_t	count;
 
 	if (str == NULL)
 		return (0);
 	va_start(arg_ptr, str);
 	count = 0;
-	while (*str != '\0')
+	while (str != NULL && *str != '\0')
 	{
 		while (*str != '%' && *str != '\0')
 			count += ft_putchar_fd(*(str++), 1);
 		if (ft_verify_param(*str, *(str + 1)) != 0)
 		{
-			count += ft_print_search(*(str + 1), arg_ptr);
+			write_count = ft_print_search(*(str + 1), arg_ptr);
+			if (write_count == -1)
+				return (-1);
+			count += write_count;
 			str += 2;
 		}
-		if (*str == '%')
-		{
-			write(1, "%", 1);
+		else if (*str == '%' && *(str + 1) != '\0')
 			str++;
-		}
 	}
 	va_end(arg_ptr);
 	return (count);

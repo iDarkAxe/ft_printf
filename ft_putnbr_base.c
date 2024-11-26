@@ -22,17 +22,17 @@
  */
 static ssize_t	ft_putnbr_hex_start(unsigned int nbr, char *base)
 {
-	ssize_t			temp;
+	ssize_t			count;
 
-	temp = 0;
+	count = 0;
 	if (nbr >= 16)
 	{
-		temp += ft_putnbr_hex_start(nbr / 16, base);
-		temp += ft_putnbr_hex_start(nbr % 16, base);
+		count += ft_putnbr_hex_start(nbr / 16, base);
+		count += ft_putnbr_hex_start(nbr % 16, base);
 	}
 	else if (nbr >= 0)
-		temp += write(1, &base[nbr], 1);
-	return (temp);
+		count += write(1, &base[nbr], 1);
+	return (count);
 }
 
 /**
@@ -86,6 +86,7 @@ ssize_t	ft_putpointer_fd(unsigned long nbr)
 {
 	if (!nbr)
 		return (write(1, "(nil)", 5));
-	return (write(1, "0x", 2) + ft_putnbr_hex_pointer(nbr,
-			"0123456789abcdef\0"));
+	if (write(1, "0x", 2) != -1)
+		return (ft_putnbr_hex_pointer(nbr, "0123456789abcdef\0") + 2);
+	return (-1);
 }
