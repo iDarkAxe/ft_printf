@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 11:58:55 by ppontet           #+#    #+#             */
-/*   Updated: 2024/11/26 19:04:52 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2024/11/27 13:11:36 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,13 @@
 static ssize_t	ft_print_search(char param, va_list va);
 static char		ft_verify_param(char param, char format);
 
-__attribute__((format(printf, 1, 2)))
 int	ft_printf(const char *str, ...)
 {
 	va_list	arg_ptr;
 	ssize_t	write_count;
 	size_t	count;
 
-	if (str == NULL)
+	if (str == NULL || (str != NULL && *str == '%' && *(str + 1) == '\0'))
 		return (-1);
 	va_start(arg_ptr, str);
 	count = 0;
@@ -40,7 +39,7 @@ int	ft_printf(const char *str, ...)
 			count += write_count;
 			str += 2;
 		}
-		else if (*str == '%' && *(str + 1) != '\0')
+		else if (*str == '%' && ft_verify_param(*str, *(str + 1)) == 0)
 			str++;
 	}
 	va_end(arg_ptr);
@@ -62,6 +61,8 @@ static char	ft_verify_param(char param, char format)
 		|| format == 'i' || format == 'u' || format == 'x' || format == 'X'
 		|| format == '%')
 		return (format);
+	else if (param == '%')
+		return (-1);
 	else
 		return (0);
 }
@@ -88,5 +89,5 @@ static ssize_t	ft_print_search(char param, va_list va)
 		return (ft_putnbr_fd(va_arg(va, unsigned int), 1));
 	if (param == 'x' || param == 'X')
 		return (ft_putnbr_hex(va_arg(va, unsigned int), param));
-	return (0);
+	return (-1);
 }
