@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:12:07 by ppontet           #+#    #+#             */
-/*   Updated: 2024/11/25 14:53:11 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2024/11/28 16:08:23 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,26 @@ ssize_t	ft_putchar_fd(char c, int fd)
 
 /**
  * @brief Write the int 'n' on the given file descriptor
+ *	Works with recursion
+ * @param n number to print
+ * @param fd file descriptor
+ * @return ssize_t number of char printed
+ */
+static ssize_t	ft_putnbr_recursive_fd(long long n, int fd)
+{
+	ssize_t	count_printed;
+	char	temp;
+
+	count_printed = 0;
+	if (n >= 10)
+		count_printed += ft_putnbr_fd(n / 10, fd);
+	temp = n % 10 + '0';
+	count_printed += write(fd, &temp, 1);
+	return (count_printed);
+}
+
+/**
+ * @brief Write the int 'n' on the given file descriptor
  *
  * @param n number to print
  * @param fd file descriptor
@@ -48,23 +68,13 @@ ssize_t	ft_putchar_fd(char c, int fd)
  */
 ssize_t	ft_putnbr_fd(long long n, int fd)
 {
-	ssize_t	count_printed;
-	char	temp;
+	ssize_t count_printed;
 
 	count_printed = 0;
 	if (n < 0)
 	{
-		if (n == -2147483648)
-			return (write(fd, "-2147483648", 11));
-		else
-		{
-			n = -n;
-			count_printed += write(fd, "-", 1);
-		}
+		n = -n;
+		count_printed += write(fd, "-", 1);
 	}
-	if (n >= 10)
-		count_printed += ft_putnbr_fd(n / 10, fd);
-	temp = n % 10 + '0';
-	count_printed += write(fd, &temp, 1);
-	return (count_printed);
+	return (count_printed + ft_putnbr_recursive_fd(n, fd));
 }

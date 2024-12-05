@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 11:58:55 by ppontet           #+#    #+#             */
-/*   Updated: 2024/11/27 13:11:36 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2024/11/27 15:18:32 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@
 static ssize_t	ft_print_search(char param, va_list va);
 static char		ft_verify_param(char param, char format);
 
+/**
+ * @brief Works similarly as printf without handling size format
+ * 
+ * @param str 
+ * @param ...
+ * @return int 
+ */
 int	ft_printf(const char *str, ...)
 {
 	va_list	arg_ptr;
