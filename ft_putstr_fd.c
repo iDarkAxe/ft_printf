@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:12:07 by ppontet           #+#    #+#             */
-/*   Updated: 2024/11/28 16:08:23 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2024/12/09 17:34:49 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static ssize_t	ft_putnbr_recursive_fd(long long n, int fd)
  */
 ssize_t	ft_putnbr_fd(long long n, int fd)
 {
-	ssize_t count_printed;
+	ssize_t	count_printed;
 
 	count_printed = 0;
 	if (n < 0)
