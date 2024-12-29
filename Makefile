@@ -1,6 +1,7 @@
 .PHONY : all clean fclean re
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -MMD -MP
+CFLAGS_DEBUG = $(CFLAGS) -g3 -fsanitize=address -fsanitize=leak -Weverything -Wno-unsafe-buffer-usage #use CC=clang
 NAME = libftprintf.a
 
 # DIRECTORIES

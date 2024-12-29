@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:31:04 by ppontet           #+#    #+#             */
-/*   Updated: 2024/11/25 16:10:50 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2024/12/29 23:46:59 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 /**
  * @brief Putnbr with a particular base
  *
- * @param nbr
- * @param base
+ * @param nbr Number to be printed
+ * @param base Base to be used
  * @return ssize_t number of char printed
  */
 static ssize_t	ft_putnbr_hex_start(unsigned int nbr, char *base)
@@ -30,7 +30,7 @@ static ssize_t	ft_putnbr_hex_start(unsigned int nbr, char *base)
 		count += ft_putnbr_hex_start(nbr / 16, base);
 		count += ft_putnbr_hex_start(nbr % 16, base);
 	}
-	else if (nbr >= 0)
+	else
 		count += write(1, &base[nbr], 1);
 	return (count);
 }
@@ -38,8 +38,8 @@ static ssize_t	ft_putnbr_hex_start(unsigned int nbr, char *base)
 /**
  * @brief Putnbr for hex or HEX
  *
- * @param nbr
- * @param height
+ * @param nbr Number to be printed
+ * @param height 'x' or 'X'
  */
 ssize_t	ft_putnbr_hex(unsigned int nbr, char height)
 {
@@ -52,35 +52,30 @@ ssize_t	ft_putnbr_hex(unsigned int nbr, char height)
 /**
  * @brief Putnbr with a particular base
  *
- * @param nbr
- * @param base
+ * @param nbr Number to be printed
+ * @param base Base to be used
  * @return ssize_t number of char printed
  */
 static ssize_t	ft_putnbr_hex_pointer(unsigned long nbr, char *base)
 {
 	ssize_t				temp;
-	unsigned long long	nb;
 
 	temp = 0;
-	if (nbr < 0)
-		nb = -nbr;
-	else
-		nb = nbr;
-	if (nb >= 16)
+	if (nbr >= 16)
 	{
-		temp += ft_putnbr_hex_pointer(nb / 16, base);
-		temp += ft_putnbr_hex_pointer(nb % 16, base);
+		temp += ft_putnbr_hex_pointer(nbr / 16, base);
+		temp += ft_putnbr_hex_pointer(nbr % 16, base);
 	}
 	else
-		temp += write(1, &base[nb], 1);
+		temp += write(1, &base[nbr], 1);
 	return (temp);
 }
 
 /**
  * @brief Print pointer adress
  *
- * @param nbr
- * @return ssize_t
+ * @param nbr Number to be printed
+ * @return ssize_t number of char printed
  */
 ssize_t	ft_putpointer_fd(unsigned long nbr)
 {
