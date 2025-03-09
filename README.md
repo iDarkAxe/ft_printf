@@ -100,7 +100,7 @@ Le premier prérequis est de ne pas utiliser de système de gestion de la mémoi
 * [⚙️ Compilation](#compilation-fr)
 * [📝 Notes supplémentaires](#notes-fr)
 
-## <a name="compatible-flags-fr">Compatible flags ##
+## <a name="compatible-flags-fr">✨ Compatible flags ##
 
 `cspdiuxX%` veut dire qu'il faut être compatible avec les flags suivants :
 `c`,`s`,`p`,`d`,`i`,`u`,`x`,`X`,`%`.
@@ -124,7 +124,7 @@ Les flags sont utilisés comme ça :
 
 N'importe quel autre flag non défini précédemment résultera n'une manière indéterminée donc s'il vous plait, évitez.
 
-## <a name="usage-fr">Utilisation ##
+## <a name="usage-fr">🚀 Utilisation ##
 
 `int ft_printf(const char *str, ...);`
 
@@ -134,7 +134,7 @@ N'importe quel autre flag non défini précédemment résultera n'une manière i
 
 Utiliser des arguments variadics est pratique quand on ne connait pas à l'avance le nombre d'argument que contiendra la fonction, et sans connaitre leur type. Pour déterminer le type, on utilise le flag. On peut par exemple afficher un entier avec le flag d'une chaîne mais ça ne marchera pas comme prévu.
 
-## <a name="compilation-fr">Compilation ##
+## <a name="compilation-fr">⚙️ Compilation ##
 
 Utiliser ``make`` pour compiler la bibliothèque
 
@@ -144,6 +144,6 @@ make
 
 Pour l'utiliser dans un programme, vous devriez ajouter `-lftprintf` à vos lignes de compilation.
 
-## <a name="notes-fr">Notes Supplémentaires ##
+## <a name="notes-fr">📝 Notes Supplémentaires ##
 
 La bibliothèque ne peut pas leak car il n'y a pas d'allocation mémoire.
