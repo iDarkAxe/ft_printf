@@ -1,5 +1,7 @@
 # FT_PRINTF #
 
+## <a name="introduction-en">📖 Introduction ##
+
 Own implementation of printf() function from libc (stdio.h).
 
 The prototype of ft_printf() is:
@@ -14,7 +16,15 @@ Here are the requirements:
 
 The first requirements is to not use any sort of buffering so this ft_printf is executing each argument one by one, and writing on the file descriptor (1, for stdout).
 
-## Compatible flags ##
+## 📋 Table of Contents ##
+
+* [📖 Introduction](#introduction-en)
+* [✨ Compatible Flags](#compatible-flags-en)
+* [🚀 Usage](#usage-en)
+* [⚙️ Compilation](#compilation-en)
+* [📝 Additionnal Notes](#notes-en)
+
+## <a name="compatible-flags-en">✨ Compatible flags ##
 
 `cspdiuxX%` means that you need to handle the following letters as 'flags' :
 `c`,`s`,`p`,`d`,`i`,`u`,`x`,`X`,`%`.
@@ -35,9 +45,11 @@ The flags are used as following :
 %d is the flag and 15478 is the number that we want to print.
 
 ### Notes ###
+
 Any other flag will result as an undefined behavior so please don't.
 
-## Usage ##
+## <a name="usage-en">🚀 Usage ##
+
 `int ft_printf(const char *str, ...);`
 
 `str` is the string to print
@@ -46,20 +58,25 @@ Any other flag will result as an undefined behavior so please don't.
 
 Using variadic arguments is usefull when you don't know at advance the number of arguments that the function will receive, to handle the type of the argument, you need to know it's type. The type is known with the flag that you use. You can print an integer with a string flag but it will not work as intended.
 
-## Compilation ##
+## <a name="compilation-en">⚙️ Compilation ##
 
 Use ``make`` for compiling the library
+
 ```sh
 make
 ```
+
 To use it in your program, you should add `-lftprintf` to your compilation lines.
 
-## Additionnal Notes ##
+## <a name="notes-en">📝 Additionnal Notes ##
+
 Can't leak as there is no memory allocation in the library.
 
 ---
 
 # FT_PRINTF #
+
+## <a name="introduction-fr">📖 Introduction ##
 
 Implémentation de la fonction 'printf()' de la bibliothèque libc (stdio.h).
 
@@ -75,7 +92,15 @@ Voici les prérequis :
 
 Le premier prérequis est de ne pas utiliser de système de gestion de la mémoire car notre ft_printf exécute chaque argument un par un, et écrit directement sur le descripteur de fichier (1, pour stdout).
 
-## Compatible flags ##
+## 📋 Table des matières ##
+
+* [📖 Introduction](#introduction-fr)
+* [✨ Compatible Flags](#compatible-flags-fr)
+* [🚀 Usage](#usage-fr)
+* [⚙️ Compilation](#compilation-fr)
+* [📝 Notes supplémentaires](#notes-fr)
+
+## <a name="compatible-flags-fr">Compatible flags ##
 
 `cspdiuxX%` veut dire qu'il faut être compatible avec les flags suivants :
 `c`,`s`,`p`,`d`,`i`,`u`,`x`,`X`,`%`.
@@ -96,9 +121,11 @@ Les flags sont utilisés comme ça :
 %d est le flag et 15478 est le nombre que l'on veut afficher.
 
 ### Notes ###
+
 N'importe quel autre flag non défini précédemment résultera n'une manière indéterminée donc s'il vous plait, évitez.
 
-## Utilisation ##
+## <a name="usage-fr">Utilisation ##
+
 `int ft_printf(const char *str, ...);`
 
 `str` est la chaîne de caractère à afficher
@@ -107,14 +134,16 @@ N'importe quel autre flag non défini précédemment résultera n'une manière i
 
 Utiliser des arguments variadics est pratique quand on ne connait pas à l'avance le nombre d'argument que contiendra la fonction, et sans connaitre leur type. Pour déterminer le type, on utilise le flag. On peut par exemple afficher un entier avec le flag d'une chaîne mais ça ne marchera pas comme prévu.
 
-## Compilation ##
+## <a name="compilation-fr">Compilation ##
 
 Utiliser ``make`` pour compiler la bibliothèque
+
 ```sh
 make
 ```
+
 Pour l'utiliser dans un programme, vous devriez ajouter `-lftprintf` à vos lignes de compilation.
 
-## Notes Supplémentaires ##
-La bibliothèque ne peut pas leak car il n'y a pas d'allocation mémoire.
+## <a name="notes-fr">Notes Supplémentaires ##
 
+La bibliothèque ne peut pas leak car il n'y a pas d'allocation mémoire.
