@@ -5,3 +5,4 @@ tester_ft_printf.c
 .obj
 temp
 libft
+ft_printf.a

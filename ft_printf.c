@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 11:58:55 by ppontet           #+#    #+#             */
-/*   Updated: 2024/12/29 23:48:37 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/03/17 14:47:53 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 
-static ssize_t	ft_print_search(char param, va_list va);
+static ssize_t	ft_print_search(int fd, char param, va_list va);
 static char		ft_verify_param(char param, char format);
 
 /**
@@ -40,7 +40,44 @@ int	ft_printf(const char *str, ...)
 			count += (size_t) ft_putchar_fd(*(str++), 1);
 		if (ft_verify_param(*str, *(str + 1)) != 0)
 		{
-			write_count = ft_print_search(*(str + 1), arg_ptr);
+			write_count = ft_print_search(1, *(str + 1), arg_ptr);
+			if (write_count == -1)
+				return (-1);
+			count += (size_t) write_count;
+			str += 2;
+		}
+		else if (*str == '%' && ft_verify_param(*str, *(str + 1)) == 0)
+			str++;
+	}
+	va_end(arg_ptr);
+	return ((int)count);
+}
+
+/**
+ * @brief Works similarly as printf without handling size format
+ * 
+ * @param fd File descriptor
+ * @param str String to be printed
+ * @param ... Variadic arguments
+ * @return int Returns the number of characters printed or -1 if error
+ */
+int	ft_printf_fd(int fd, const char *str, ...)
+{
+	va_list	arg_ptr;
+	ssize_t	write_count;
+	size_t	count;
+
+	if (str == NULL || (str != NULL && *str == '%' && *(str + 1) == '\0'))
+		return (-1);
+	va_start(arg_ptr, str);
+	count = 0;
+	while (str != NULL && *str != '\0')
+	{
+		while (*str != '%' && *str != '\0')
+			count += (size_t) ft_putchar_fd(*(str++), fd);
+		if (ft_verify_param(*str, *(str + 1)) != 0)
+		{
+			write_count = ft_print_search(fd, *(str + 1), arg_ptr);
 			if (write_count == -1)
 				return (-1);
 			count += (size_t) write_count;
@@ -77,24 +114,25 @@ static char	ft_verify_param(char param, char format)
 /**
  * @brief Executes the right function for the right param
  *
+ * @param fd File descriptor
  * @param param Character after the percentage
  * @param va Variadic arguments
  */
-static ssize_t	ft_print_search(char param, va_list va)
+static ssize_t	ft_print_search(int fd, char param, va_list va)
 {
 	if (param == '%')
-		return (ft_putchar_fd('%', 1));
+		return (ft_putchar_fd('%', fd));
 	if (param == 'c')
-		return (ft_putchar_fd((char)va_arg(va, int), 1));
+		return (ft_putchar_fd((char)va_arg(va, int), fd));
 	if (param == 's')
-		return (ft_putstr_fd(va_arg(va, char *), 1));
+		return (ft_putstr_fd(va_arg(va, char *), fd));
 	if (param == 'p')
-		return (ft_putpointer_fd((unsigned long)va_arg(va, long long)));
+		return (ft_putpointer_fd((unsigned long)va_arg(va, long long), fd));
 	if (param == 'd' || param == 'i')
-		return (ft_putnbr_fd(va_arg(va, int), 1));
+		return (ft_putnbr_fd(va_arg(va, int), fd));
 	if (param == 'u')
-		return (ft_putnbr_fd(va_arg(va, unsigned int), 1));
+		return (ft_putnbr_fd(va_arg(va, unsigned int), fd));
 	if (param == 'x' || param == 'X')
-		return (ft_putnbr_hex(va_arg(va, unsigned int), param));
+		return (ft_putnbr_hex(va_arg(va, unsigned int), param, fd));
 	return (-1);
 }
