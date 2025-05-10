@@ -4,8 +4,9 @@
 
 Own implementation of printf() function from libc (stdio.h).
 
-The prototype of ft_printf() is:
-`int ft_printf(const char *, ...);`
+The prototype of ft_printf() is: `int ft_printf(const char *, ...);`
+
+The prototype of ft_dprintf() is: `int ft_dprintf(int fd, const char *str, ...);`
 
 Here are the requirements:
 
@@ -51,6 +52,9 @@ Any other flag will result as an undefined behavior so please don't.
 ## <a name="usage-en">🚀 Usage ##
 
 `int ft_printf(const char *str, ...);`
+`int ft_dprintf(int fd, const char *str, ...);`
+
+`fd` is the file descriptor to write to
 
 `str` is the string to print
 
@@ -80,8 +84,9 @@ Can't leak as there is no memory allocation in the library.
 
 Implémentation de la fonction 'printf()' de la bibliothèque libc (stdio.h).
 
-Le prototype de ft_printf est :
-`int ft_printf(const char *, ...);`
+Le prototype de ft_printf est : `int ft_printf(const char *, ...);`
+
+Le prototype de ft_dprintf est : `int ft_dprintf(int fd, const char *str, ...);`
 
 Voici les prérequis :
 
@@ -127,6 +132,10 @@ N'importe quel autre flag non défini précédemment résultera n'une manière i
 ## <a name="usage-fr">🚀 Utilisation ##
 
 `int ft_printf(const char *str, ...);`
+
+`int ft_dprintf(int fd, const char *str, ...);`
+
+`fd` est le descripteur de fichier vers lequel écrire
 
 `str` est la chaîne de caractère à afficher
 
