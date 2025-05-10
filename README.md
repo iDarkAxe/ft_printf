@@ -1,5 +1,7 @@
 # FT_PRINTF #
 
+⚠️/!\ Added to libft, so it's not maintained anymore as a standalone. /!\⚠️
+
 ## <a name="introduction-en">📖 Introduction ##
 
 Own implementation of printf() function from libc (stdio.h).
@@ -79,6 +81,8 @@ Can't leak as there is no memory allocation in the library.
 ---
 
 # FT_PRINTF #
+
+⚠️/!\ Ajouté à la libft, donc ce n'est plus maintenu tout seul. /!\⚠️
 
 ## <a name="introduction-fr">📖 Introduction ##
 
