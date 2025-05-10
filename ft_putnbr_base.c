@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:31:04 by ppontet           #+#    #+#             */
-/*   Updated: 2025/03/17 14:48:11 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/10 10:47:26 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,24 @@
 static ssize_t	ft_putnbr_hex_start(unsigned int nbr, const char *base, int fd)
 {
 	ssize_t	count;
+	ssize_t	count_temp;
+	ssize_t	count_temp2;
 
 	count = 0;
+	count_temp = 0;
+	count_temp2 = 0;
 	if (nbr >= 16)
 	{
-		count += ft_putnbr_hex_start(nbr / 16, base, fd);
-		count += ft_putnbr_hex_start(nbr % 16, base, fd);
+		count_temp = ft_putnbr_hex_start(nbr / 16, base, fd);
+		if (count_temp < 0)
+			return (count_temp);
+		count_temp2 = ft_putnbr_hex_start(nbr % 16, base, fd);
+		if (count_temp2 < 0)
+			return (count_temp2);
 	}
 	else
-		count += write(fd, &base[nbr], 1);
-	return (count);
+		count = write(fd, &base[nbr], 1);
+	return (count + count_temp + count_temp2);
 }
 
 /**
@@ -62,16 +70,24 @@ static ssize_t	ft_putnbr_hex_pointer(unsigned long nbr, const char *base,
 		int fd)
 {
 	ssize_t	temp;
+	ssize_t	count_temp;
+	ssize_t	count_temp2;
 
 	temp = 0;
+	count_temp = 0;
+	count_temp2 = 0;
 	if (nbr >= 16)
 	{
-		temp += ft_putnbr_hex_pointer(nbr / 16, base, fd);
-		temp += ft_putnbr_hex_pointer(nbr % 16, base, fd);
+		count_temp = ft_putnbr_hex_pointer(nbr / 16, base, fd);
+		if (count_temp < 0)
+			return (count_temp);
+		count_temp2 = ft_putnbr_hex_pointer(nbr % 16, base, fd);
+		if (count_temp2 < 0)
+			return (count_temp2);
 	}
 	else
-		temp += write(fd, &base[nbr], 1);
-	return (temp);
+		temp = write(fd, &base[nbr], 1);
+	return (temp + count_temp + count_temp2);
 }
 
 /**

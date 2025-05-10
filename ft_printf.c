@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 11:58:55 by ppontet           #+#    #+#             */
-/*   Updated: 2025/03/17 14:47:53 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/10 11:40:39 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 #include <unistd.h>
 
 static ssize_t	ft_print_search(int fd, char param, va_list va);
-static char		ft_verify_param(char param, char format);
+static ssize_t	ft_verify_param(const char **str, int fd, va_list va);
 
 /**
  * @brief Works similarly as printf without handling size format
- * 
+ *
  * @param str String to be printed
  * @param ... Variadic arguments
  * @return int Returns the number of characters printed or -1 if error
@@ -30,24 +30,16 @@ int	ft_printf(const char *str, ...)
 	ssize_t	write_count;
 	size_t	count;
 
-	if (str == NULL || (str != NULL && *str == '%' && *(str + 1) == '\0'))
+	count = 0;
+	if (str == NULL || (str[0] == '%' && str[1] == '\0'))
 		return (-1);
 	va_start(arg_ptr, str);
-	count = 0;
-	while (str != NULL && *str != '\0')
+	while (*str != '\0')
 	{
-		while (*str != '%' && *str != '\0')
-			count += (size_t) ft_putchar_fd(*(str++), 1);
-		if (ft_verify_param(*str, *(str + 1)) != 0)
-		{
-			write_count = ft_print_search(1, *(str + 1), arg_ptr);
-			if (write_count == -1)
-				return (-1);
-			count += (size_t) write_count;
-			str += 2;
-		}
-		else if (*str == '%' && ft_verify_param(*str, *(str + 1)) == 0)
-			str++;
+		write_count = ft_verify_param(&str, 1, arg_ptr);
+		if (write_count < 0)
+			return ((int)write_count);
+		count += (size_t)write_count;
 	}
 	va_end(arg_ptr);
 	return ((int)count);
@@ -55,36 +47,28 @@ int	ft_printf(const char *str, ...)
 
 /**
  * @brief Works similarly as printf without handling size format
- * 
+ *
  * @param fd File descriptor
  * @param str String to be printed
  * @param ... Variadic arguments
  * @return int Returns the number of characters printed or -1 if error
  */
-int	ft_printf_fd(int fd, const char *str, ...)
+int	ft_dprintf(int fd, const char *str, ...)
 {
 	va_list	arg_ptr;
 	ssize_t	write_count;
 	size_t	count;
 
-	if (str == NULL || (str != NULL && *str == '%' && *(str + 1) == '\0'))
+	count = 0;
+	if (str == NULL || (str[0] == '%' && str[1] == '\0'))
 		return (-1);
 	va_start(arg_ptr, str);
-	count = 0;
-	while (str != NULL && *str != '\0')
+	while (*str != '\0')
 	{
-		while (*str != '%' && *str != '\0')
-			count += (size_t) ft_putchar_fd(*(str++), fd);
-		if (ft_verify_param(*str, *(str + 1)) != 0)
-		{
-			write_count = ft_print_search(fd, *(str + 1), arg_ptr);
-			if (write_count == -1)
-				return (-1);
-			count += (size_t) write_count;
-			str += 2;
-		}
-		else if (*str == '%' && ft_verify_param(*str, *(str + 1)) == 0)
-			str++;
+		write_count = ft_verify_param(&str, fd, arg_ptr);
+		if (write_count < 0)
+			return ((int)write_count);
+		count += (size_t)write_count;
 	}
 	va_end(arg_ptr);
 	return ((int)count);
@@ -93,22 +77,35 @@ int	ft_printf_fd(int fd, const char *str, ...)
 /**
  * @brief Verify if the param after the percentage exist
  *
- * @param param Should be the percentage
- * @param format Character after the percentage
+ * @param str String currently testing
  * @return char returns param if exist in printf, 0 if doesn´t
  */
-static char	ft_verify_param(char param, char format)
+static ssize_t	ft_verify_param(const char **str, int fd, va_list va)
 {
-	if (param == '\0' || param != '%' || format == '\0')
-		return (0);
+	ssize_t	ret;
+	char	format;
+
+	if ((*str)[0] != '%')
+	{
+		ret = ft_putchar_fd((*str)[0], fd);
+		(*str)++;
+		return (ret);
+	}
+	format = (*str)[1];
+	if (format == '\0')
+	{
+		(*str)++;
+		return (-1);
+	}
 	if (format == 'c' || format == 's' || format == 'p' || format == 'd'
 		|| format == 'i' || format == 'u' || format == 'x' || format == 'X'
 		|| format == '%')
-		return (format);
-	else if (param == '%')
-		return (-1);
-	else
-		return (0);
+	{
+		(*str) += 2;
+		return (ft_print_search(fd, format, va));
+	}
+	(*str) += 2;
+	return (-1);
 }
 
 /**

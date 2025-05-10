@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:12:07 by ppontet           #+#    #+#             */
-/*   Updated: 2024/12/09 17:34:49 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/10 10:43:01 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,21 @@ ssize_t	ft_putchar_fd(char c, int fd)
 static ssize_t	ft_putnbr_recursive_fd(long long n, int fd)
 {
 	ssize_t	count_printed;
+	ssize_t	count_printed_temp;
 	char	temp;
 
 	count_printed = 0;
 	if (n >= 10)
-		count_printed += ft_putnbr_fd(n / 10, fd);
+	{
+		count_printed = ft_putnbr_fd(n / 10, fd);
+		if (count_printed < 0)
+			return (count_printed);
+	}
 	temp = n % 10 + '0';
-	count_printed += write(fd, &temp, 1);
-	return (count_printed);
+	count_printed_temp = write(fd, &temp, 1);
+	if (count_printed_temp < 0)
+		return (count_printed_temp);
+	return (count_printed + count_printed_temp);
 }
 
 /**
@@ -69,12 +76,18 @@ static ssize_t	ft_putnbr_recursive_fd(long long n, int fd)
 ssize_t	ft_putnbr_fd(long long n, int fd)
 {
 	ssize_t	count_printed;
+	ssize_t	count_printed_temp;
 
 	count_printed = 0;
 	if (n < 0)
 	{
 		n = -n;
-		count_printed += write(fd, "-", 1);
+		count_printed = write(fd, "-", 1);
+		if (count_printed < 0)
+			return (count_printed);
 	}
-	return (count_printed + ft_putnbr_recursive_fd(n, fd));
+	count_printed_temp = ft_putnbr_recursive_fd(n, fd);
+	if (count_printed_temp < 0)
+		return (count_printed_temp);
+	return (count_printed + count_printed_temp);
 }
